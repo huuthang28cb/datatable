@@ -199,6 +199,6 @@
             }
         });
     });
-
+// https://github.com/amitbauriya/laravel-datatables-crud/blob/master/resources/views/layouts/app.blade.php
 </script>
 </html>
