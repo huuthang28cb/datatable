@@ -81,5 +81,5 @@ class DoctorController extends Controller
             dd($e->getMessage());
         }
     }
-
+ //"open_numbers_formatted":
 }
