@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/doctors', [DoctorController::class, 'index']);
 Route::get('/doctors/list', [DoctorController::class, 'dataDoctor'])->name('doctors.list');
-// Route::resource('students', 'DoctorController');
-// Route::get('users', [DoctorController::class, 'index'])->name('users.index');
-Route::post('add-doctors', [DoctorController::class, 'store']);
+
+// Route::post('/doctors/store', [DoctorController::class, 'store'])->name('doctors.store');
+Route::post('/doctors/store',[DoctorController::class, 'store'])->name('doctors.store');
+Route::get('/doctors/edit/{id}',[DoctorController::class, 'edit'])->name('doctors.edit');
+Route::put('/doctors/update/{id}',[DoctorController::class, 'update'])->name('doctors.update');
+Route::delete('/doctors/delete/{id}',[DoctorController::class, 'delete'])->name('doctors.delete');

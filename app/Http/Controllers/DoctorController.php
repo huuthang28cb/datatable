@@ -19,9 +19,9 @@ class DoctorController extends Controller
             // dd($data);
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a> 
-                    <a href="javascript:void(0)" class="delete btn btn-danger btn-sm delete-modal"><i class="bi bi-trash3-fill"></i></a>';
+                ->addColumn('action', function($data){
+                    $actionBtn = '<button type="button" data-id="' . $data->id . '" class="edit btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></button> 
+                    <button type="button" data-id="' . $data->id . '" class="delete btn btn-danger btn-sm delete-modal"><i class="bi bi-trash3-fill"></i></button>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -37,8 +37,49 @@ class DoctorController extends Controller
 
             return response()->json(['success' => 'data is successfully added'], 200);
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
+            return response()->json(['error' => $e], 500);
         }
 
     }
+    public function edit($id)
+    {
+        try
+        {
+            $doctor = Doctor::where('id', $id)->first();
+            return response()->json(['success' => 'successfull retrieve data', 'data' => $doctor->toJson()], 200);
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+    }
+    public function update(Request $request, $id)
+    {
+        try
+        {
+
+            $doctor = Doctor::findOrFail($id);
+            $doctor->name = $request->name;
+            $doctor->email = $request->email;
+            $doctor->phone = $request->phone;
+            $doctor->address = $request->address;
+            $doctor->update();
+
+            return response()->json(['success' => 'data is successfully updated'], 200);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+    }
+    public function delete($id)
+    {
+        try
+        {
+            Doctor::find($id)->delete();
+
+            return response()->json(['success' => 'data is successfully deleted'], 200);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+    }
+
 }
